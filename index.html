@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special for All ✨💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Caveat:wght@600&family=Poppins:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2b1055 0%, #7597de 50%, #b86b77 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+      position: relative;
+    }
+
+    /* Background Animation */
+    .bg-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Kelinci Berjalan Membentuk Love */
+    .rabbit-pair {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 2;
+    }
+
+    .rabbit {
+      font-size: 45px;
+      animation: rabbitWalk 3s ease-in-out infinite alternate;
+    }
+
+    .heart-trail {
+      font-size: 35px;
+      animation: heartPulse 1.5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 10px #ff758c);
+    }
+
+    @keyframes rabbitWalk {
+      0% { transform: translateY(0) scale(0.95); }
+      100% { transform: translateY(-12px) scale(1.05); }
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+
+    /* Floating Hearts Latar Belakang */
+    .floating-heart {
+      position: absolute;
+      color: rgba(255, 182, 193, 0.6);
+      font-size: 20px;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.5) rotate(0deg); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
+    }
+
+    /* Tombol Musik */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Kartu Utama */
+    .card-container {
+      position: relative;
+      z-index: 10;
+      width: 90%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      padding: 30px 22px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .header-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.2rem;
+      color: #ffdeeb;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .page-indicator {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffd1dc;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .content-box {
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      padding: 0 5px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .letter-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.85rem;
+      line-height: 1.5;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tombol Navigasi */
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    button.nav-btn {
+      flex: 1;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 25px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: #ffffff;
+    }
+
+    .btn-next:hover {
+      background: linear-gradient(135deg, #ff5277, #ff639e);
+      transform: translateY(-2px);
+    }
+
+    .btn-prev {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-prev:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Game Kuis */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .quiz-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px;
+      border-radius: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-btn:hover {
+      background: rgba(255, 117, 140, 0.4);
+      border-color: #ff758c;
+    }
+
+    /* Game Bongkar Pasang (Puzzle) */
+    .puzzle-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 110px);
+      grid-template-rows: repeat(2, 110px);
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .puzzle-piece {
+      width: 110px;
+      height: 110px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 2px dashed rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+
+    .puzzle-piece.solved {
+      background: rgba(255, 117, 140, 0.6);
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Musik Latar Instrument Acoustic Santai -->
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cute-acoustic-112328.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Element Kelinci Cinta -->
+  <div class="bg-overlay" id="bgOverlay"></div>
+  <div class="rabbit-pair">
+    <div class="rabbit">🐇</div>
+    <div class="heart-trail">💖</div>
+    <div class="rabbit">🐇</div>
+  </div>
+
+  <!-- Kartu Utama -->
+  <div class="card-container">
+    <div class="header-title" id="headerTitle">For My Favorite, All ✨</div>
+    <div class="page-indicator" id="pageIndicator">GAME PERSIAPAN</div>
+    
+    <div class="content-box" id="letterContent"></div>
+
+    <div class="btn-group">
+      <button class="nav-btn btn-prev" id="prevBtn" onclick="prevPage()" disabled>Kembali</button>
+      <button class="nav-btn btn-next" id="nextBtn" onclick="nextPage()">Lanjut ✨</button>
+    </div>
+  </div>
+
+  <script>
+    // Teks Romantis Menyentuh Hati Khusus untuk All
+    const pages = [
+      "Halo All... ✨ Ada satu rahasia kecil di dalam web ini yang khusus diciptakan cuma buat kamu.",
+      "Di antara berjuta manusia di bumi, bersyukur banget aku bisa dipertemukan dan kenal sama kamu, All...",
+      "Kamu tuh punya cara tersendiri buat bikin hari-hariku terasa tenang. Kehadiran kamu itu sederhana, tapi pengaruhnya luar biasa besar buat aku. 💖",
+      "Setiap kali ngobrol atau sekadar ingat kamu, rasanya ada rasa hangat yang diam-diam bikin aku senyum-senyum sendiri, All... 🫣",
+      "Mungkin kamu nggak pernah sadar, tapi di balik caraku yang kadang suka gajelas atau nyebelin, kamu selalu jadi alasan terbaikku buat bahagia.",
+      "Aku suka gimana kamu jadi diri kamu sendiri. Tetap jadi All yang hangat, tenang, dan selalu bawa kenyamanan yaa...",
+      "Kalau suatu saat kamu merasa lelah sama dunia, ingat ya All, di sini ada aku yang selalu mendukung dan mengagumi kamu sepenuhnya.",
+      "Aku nggak minta banyak hal, cukup kamu tetap ada dan selalu bahagia dengan jalan yang kamu pilih. 😊✨",
+      "Terima kasih ya All, udah hadir dan bikin duniaku terasa jauh lebih indah dari sebelumnya...",
+      "Surat ini memang singkat, tapi rasa hangat di dalamnya tulus cuma buat kamu. Tetap jadi All favoritku yaa! I really appreciate your existence! ❤️✨"
+    ];
+
+    let currentStage = 'GAME_PUZZLE'; // GAME_PUZZLE, SURAT, QUIZ
+    let currentPage = 0;
+    let isMusicPlaying = false;
+    let puzzleState = [false, false, false, false];
+
+    const letterContent = document.getElementById('letterContent');
+    const pageIndicator = document.getElementById('pageIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+
+    function playSound() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(580, ctx.currentTime);
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.12);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.12);
+    }
+
+    function toggleMusic() {
+      if (isMusicPlaying) {
+        bgMusic.pause(); musicBtn.innerText = '🔇'; isMusicPlaying = false;
+      } else {
+        bgMusic.play(); musicBtn.innerText = '🎵'; isMusicPlaying = true;
+      }
+    }
+
+    // GAME 1: Bongkar Pasang / Puzzle Cinta
+    function renderPuzzleGame() {
+      pageIndicator.innerText = "MINI GAME: BONGKAR PASANG CINTA 🧩";
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+
+      const puzzleIcons = ['🧩', '❤️', '✨', '🔒'];
+      const targetIcons = ['💖', '💖', '💖', '🔓'];
+
+      let gridHTML = '<div class="puzzle-grid">';
+      for (let i = 0; i < 4; i++) {
+        const icon = puzzleState[i] ? targetIcons[i] : puzzleIcons[i];
+        const solvedClass = puzzleState[i] ? 'solved' : '';
+        gridHTML += `<div class="puzzle-piece ${solvedClass}" onclick="clickPuzzle(${i})">${icon}</div>`;
+      }
+      gridHTML += '</div>';
+
+      letterContent.innerHTML = `
+        <div class="letter-text">Ayo All, susun bongkar pasang kepingan ini (klik 4 kotak) buat membongkar pesan cinta di dalamnya!</div>
+        ${gridHTML}
+      `;
+    }
+
+    function clickPuzzle(index) {
+      playSound();
+      if (!puzzleState[index]) {
+        puzzleState[index] = true;
+        renderPuzzleGame();
+
+        if (puzzleState.every(item => item === true)) {
+          confetti({ particleCount: 70, spread: 70 });
+          nextBtn.disabled = false;
+          if (!isMusicPlaying) toggleMusic();
+        }
+      }
+    }
+
+    // GAME 2: Kuis Rahasia
+    function renderQuiz() {
+      pageIndicator.innerText = "MINI GAME: KUIS TEBAK PERASAAN 🔑";
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+
+      letterContent.innerHTML = `
+        <div class="letter-text">Tebak All, kira-kira alasan utama aku bikin web romantis ini khusus buat kamu apa hayo? 🫣</div>
+        <div class="quiz-options">
+          <button class="quiz-btn" onclick="answerQuiz(true)">Karena All itu cowok yang paling spesial! ✨💖</button>
+          <button class="quiz-btn" onclick="answerQuiz(false)">Iseng aja pengen bikin All senyum 😊</button>
+          <button class="quiz-btn" onclick="answerQuiz(false)">Dua-duanya bener banget! 💙</button>
+        </div>
+      `;
+    }
+
+    function answerQuiz(isCorrect) {
+      playSound();
+      if (isCorrect) {
+        confetti({ particleCount: 90, spread: 80 });
+        alert("Yeay bener banget! Karena kamu emang sosok yang paling spesial buat aku, All 🫣✨.. Lanjut baca yaa!");
+        currentStage = 'SURAT';
+        currentPage = 5;
+        nextBtn.disabled = false;
+        renderCard();
+      } else {
+        alert("Tetot! Jawaban All salah 😜 Coba pilih jawaban yang paling atas deh!");
+      }
+    }
+
+    // Render Utama Card
+    function renderCard() {
+      letterContent.style.animation = 'none';
+      letterContent.offsetHeight;
+      letterContent.style.animation = 'fadeIn 0.5s ease';
+
+      if (currentStage === 'GAME_PUZZLE') {
+        renderPuzzleGame();
+      } else if (currentStage === 'QUIZ') {
+        renderQuiz();
+      } else if (currentStage === 'SURAT') {
+        pageIndicator.innerText = `HALAMAN ${currentPage + 1} DARI ${pages.length}`;
+        letterContent.innerHTML = `<div class="letter-text">${pages[currentPage]}</div>`;
+        prevBtn.disabled = currentPage === 0;
+
+        if (currentPage === pages.length - 1) {
+          nextBtn.innerText = "Selesai ✨💖";
+        } else {
+          nextBtn.innerText = "Lanjut ✨";
+        }
+      }
+    }
+
+    function nextPage() {
+      playSound();
+      if (currentStage === 'GAME_PUZZLE') {
+        currentStage = 'SURAT';
+        currentPage = 0;
+        renderCard();
+      } else if (currentStage === 'SURAT') {
+        if (currentPage === 4) {
+          currentStage = 'QUIZ';
+          renderCard();
+        } else if (currentPage < pages.length - 1) {
+          currentPage++;
+          renderCard();
+        } else {
+          confetti({ particleCount: 180, spread: 100 });
+          alert("Terima kasih udah luangin waktu buat baca pesan ini yaa, All! Stay healthy & happy selalu! ✨💙");
+        }
+      }
+    }
+
+    function prevPage() {
+      playSound();
+      if (currentPage > 0 && currentStage === 'SURAT') {
+        currentPage--;
+        renderCard();
+      }
+    }
+
+    // Floating Hearts Latar Belakang
+    function createHearts() {
+      const container = document.getElementById('bgOverlay');
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        heart.innerText = '💖';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(heart);
+      }
+    }
+
+    createHearts();
+    renderCard();
+  </script>
+</body>
+</html>
